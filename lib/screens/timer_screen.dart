@@ -121,64 +121,63 @@ class _TimerScreenState extends State<TimerScreen> {
     showDialog(
       context: context,
       barrierDismissible: false, // Prevent dismissing by tapping outside
-      builder:
-          (BuildContext dialogContext) => AlertDialog(
-            backgroundColor: const Color(0xFF1E1E1E),
-            title: const Text(
-              'Exit Timer?',
-              style: TextStyle(color: Colors.white),
-            ),
-            content: const Text(
-              'Are you sure you want to exit the timer? Your progress will be reset.',
-              style: TextStyle(color: Colors.white70),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  // Close the dialog using the dialog's context
-                  Navigator.of(dialogContext).pop();
+      builder: (BuildContext dialogContext) => AlertDialog(
+        backgroundColor: const Color(0xFF1E1E1E),
+        title: const Text(
+          'Exit Timer?',
+          style: TextStyle(color: Colors.white),
+        ),
+        content: const Text(
+          'Are you sure you want to exit the timer? Your progress will be reset.',
+          style: TextStyle(color: Colors.white70),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // Close the dialog using the dialog's context
+              Navigator.of(dialogContext).pop();
 
-                  if (mounted) {
-                    setState(() {
-                      _isExitDialogShowing = false;
-                    });
-                  }
-                },
-                style: TextButton.styleFrom(foregroundColor: Colors.white70),
-                child: const Text('No'),
-              ),
-              TextButton(
-                onPressed: () {
-                  // Close the dialog using the dialog's context
-                  Navigator.of(dialogContext).pop();
-
-                  // Get the timer model and stop it
-                  if (mounted) {
-                    final timerModel = Provider.of<TimerModel>(
-                      context,
-                      listen: false,
-                    );
-                    timerModel.stop();
-
-                    // Navigate using the main context
-                    context.go(AppRoutes.timeSelection);
-
-                    setState(() {
-                      _isExitDialogShowing = false;
-                    });
-                  }
-                },
-                style: TextButton.styleFrom(
-                  foregroundColor: AppTheme.focusColor,
-                ),
-                child: const Text('Yes'),
-              ),
-            ],
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            elevation: 24,
+              if (mounted) {
+                setState(() {
+                  _isExitDialogShowing = false;
+                });
+              }
+            },
+            style: TextButton.styleFrom(foregroundColor: Colors.white70),
+            child: const Text('No'),
           ),
+          TextButton(
+            onPressed: () {
+              // Close the dialog using the dialog's context
+              Navigator.of(dialogContext).pop();
+
+              // Get the timer model and stop it
+              if (mounted) {
+                final timerModel = Provider.of<TimerModel>(
+                  context,
+                  listen: false,
+                );
+                timerModel.stop();
+
+                // Navigate using the main context
+                context.go(AppRoutes.timeSelection);
+
+                setState(() {
+                  _isExitDialogShowing = false;
+                });
+              }
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: AppTheme.focusColor,
+            ),
+            child: const Text('Yes'),
+          ),
+        ],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        elevation: 24,
+      ),
     ).then((_) {
       if (mounted) {
         setState(() {
@@ -226,75 +225,73 @@ class _TimerScreenState extends State<TimerScreen> {
               width: double.infinity,
               height: double.infinity,
               color: Colors.black,
-              child: SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Current Mode Text
-                      Text(
-                        _getModeText(mode),
-                        style: Theme.of(
-                          context,
-                        ).textTheme.displaySmall?.copyWith(color: color),
-                      ).animate().fadeIn(
-                        duration: const Duration(milliseconds: 400),
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      // Session Counter
-                      Text(
-                        'Session ${timerModel.completedSessions + 1} of ${timerModel.sessionsBeforeLongBreak}',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ).animate().fadeIn(
-                        duration: const Duration(milliseconds: 600),
-                      ),
-
-                      const SizedBox(height: 48),
-
-                      // Timer Dial
-                      Center(
-                        child: TimerDial(
-                          duration: timerModel.remainingDuration,
-                          progress: timerModel.progress,
-                          color: color,
-                          isRunning: timerModel.isRunning,
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Current Mode Text
+                    Text(
+                      _getModeText(mode),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.displaySmall?.copyWith(color: color),
+                    ).animate().fadeIn(
+                          duration: const Duration(milliseconds: 400),
                         ),
-                      ).animate().scale(
-                        duration: const Duration(milliseconds: 800),
-                        curve: Curves.easeOutBack,
-                        begin: const Offset(0.8, 0.8),
-                        end: const Offset(1.0, 1.0),
+
+                    const SizedBox(height: 16),
+
+                    // Session Counter
+                    Text(
+                      'Session ${timerModel.completedSessions + 1} of ${timerModel.sessionsBeforeLongBreak}',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ).animate().fadeIn(
+                          duration: const Duration(milliseconds: 600),
+                        ),
+
+                    const SizedBox(height: 48),
+
+                    // Timer Dial
+                    Center(
+                      child: TimerDial(
+                        duration: timerModel.remainingDuration,
+                        progress: timerModel.progress,
+                        color: color,
+                        isRunning: timerModel.isRunning,
                       ),
+                    ).animate().scale(
+                          duration: const Duration(milliseconds: 800),
+                          curve: Curves.easeOutBack,
+                          begin: const Offset(0.8, 0.8),
+                          end: const Offset(1.0, 1.0),
+                        ),
 
-                      const SizedBox(height: 48),
+                    const SizedBox(height: 48),
 
-                      // Tap Instructions
-                      Text(
-                        timerModel.isRunning
-                            ? 'Tap once to pause'
-                            : 'Tap once to resume',
-                        style: Theme.of(
-                          context,
-                        ).textTheme.bodyMedium?.copyWith(color: Colors.white70),
-                      ).animate().fadeIn(
-                        duration: const Duration(milliseconds: 800),
-                      ),
+                    // Tap Instructions
+                    Text(
+                      timerModel.isRunning
+                          ? 'Tap once to pause'
+                          : 'Tap once to resume',
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: Colors.white70),
+                    ).animate().fadeIn(
+                          duration: const Duration(milliseconds: 800),
+                        ),
 
-                      const SizedBox(height: 8),
+                    const SizedBox(height: 8),
 
-                      Text(
-                        'Double tap to exit',
-                        style: Theme.of(
-                          context,
-                        ).textTheme.bodyMedium?.copyWith(color: Colors.white70),
-                      ).animate().fadeIn(
-                        duration: const Duration(milliseconds: 1000),
-                      ),
-                    ],
-                  ),
+                    Text(
+                      'Double tap to exit',
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: Colors.white70),
+                    ).animate().fadeIn(
+                          duration: const Duration(milliseconds: 1000),
+                        ),
+                  ],
                 ),
               ),
             ),

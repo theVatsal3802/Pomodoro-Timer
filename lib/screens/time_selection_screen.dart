@@ -33,129 +33,127 @@ class _TimeSelectionScreenState extends State<TimeSelectionScreen> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Set Timer'), elevation: 0),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Focus Duration Selection
-              _buildDurationSelector(
-                context: context,
-                title: 'Focus Duration',
-                value: timerModel.focusDuration ~/ 60,
-                onChanged: (value) {
-                  timerModel.focusDuration = value;
-                },
-                options: const [25, 30, 45, 60],
-                icon: Icons.work,
-                color: Theme.of(context).colorScheme.primary,
-              ).animate().fadeIn(
-                duration: const Duration(milliseconds: 300),
-                delay: const Duration(milliseconds: 100),
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Focus Duration Selection
+            _buildDurationSelector(
+              context: context,
+              title: 'Focus Duration',
+              value: timerModel.focusDuration ~/ 60,
+              onChanged: (value) {
+                timerModel.focusDuration = value;
+              },
+              options: const [25, 30, 45, 60],
+              icon: Icons.work,
+              color: Theme.of(context).colorScheme.primary,
+            ).animate().fadeIn(
+                  duration: const Duration(milliseconds: 300),
+                  delay: const Duration(milliseconds: 100),
+                ),
+
+            const SizedBox(height: 24),
+
+            // Short Break Duration Selection
+            _buildDurationSelector(
+              context: context,
+              title: 'Short Break Duration',
+              value: timerModel.shortBreakDuration ~/ 60,
+              onChanged: (value) {
+                timerModel.shortBreakDuration = value;
+              },
+              options: const [5, 10, 15],
+              icon: Icons.coffee,
+              color: Theme.of(context).colorScheme.secondary,
+            ).animate().fadeIn(
+                  duration: const Duration(milliseconds: 300),
+                  delay: const Duration(milliseconds: 200),
+                ),
+
+            const SizedBox(height: 24),
+
+            // Long Break Duration Selection
+            _buildDurationSelector(
+              context: context,
+              title: 'Long Break Duration',
+              value: timerModel.longBreakDuration ~/ 60,
+              onChanged: (value) {
+                timerModel.longBreakDuration = value;
+              },
+              options: const [15, 20, 30],
+              icon: Icons.self_improvement,
+              color: const Color(0xFF408EC6),
+            ).animate().fadeIn(
+                  duration: const Duration(milliseconds: 300),
+                  delay: const Duration(milliseconds: 300),
+                ),
+
+            const SizedBox(height: 24),
+
+            // Sessions Before Long Break
+            _buildDurationSelector(
+              context: context,
+              title: 'Sessions Before Long Break',
+              value: timerModel.sessionsBeforeLongBreak,
+              onChanged: (value) {
+                timerModel.sessionsBeforeLongBreak = value;
+              },
+              options: const [2, 3, 4, 5, 6],
+              icon: Icons.repeat,
+              color: Colors.purpleAccent,
+            ).animate().fadeIn(
+                  duration: const Duration(milliseconds: 300),
+                  delay: const Duration(milliseconds: 400),
+                ),
+
+            const Spacer(),
+
+            // Tutorial Button
+            TextButton.icon(
+              onPressed: () {
+                _navigateTo(AppRoutes.tutorial);
+              },
+              icon: const Icon(Icons.help_outline),
+              label: const Text('How to use'),
+              style: TextButton.styleFrom(foregroundColor: Colors.white70),
+            ).animate().fadeIn(
+                  duration: const Duration(milliseconds: 300),
+                  delay: const Duration(milliseconds: 500),
+                ),
+
+            const SizedBox(height: 16),
+
+            // Start Button
+            ElevatedButton(
+              onPressed: () {
+                _navigateTo(AppRoutes.timer);
+              },
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 16),
               ),
-
-              const SizedBox(height: 24),
-
-              // Short Break Duration Selection
-              _buildDurationSelector(
-                context: context,
-                title: 'Short Break Duration',
-                value: timerModel.shortBreakDuration ~/ 60,
-                onChanged: (value) {
-                  timerModel.shortBreakDuration = value;
-                },
-                options: const [5, 10, 15],
-                icon: Icons.coffee,
-                color: Theme.of(context).colorScheme.secondary,
-              ).animate().fadeIn(
-                duration: const Duration(milliseconds: 300),
-                delay: const Duration(milliseconds: 200),
+              child: const Text(
+                'START',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-
-              const SizedBox(height: 24),
-
-              // Long Break Duration Selection
-              _buildDurationSelector(
-                context: context,
-                title: 'Long Break Duration',
-                value: timerModel.longBreakDuration ~/ 60,
-                onChanged: (value) {
-                  timerModel.longBreakDuration = value;
-                },
-                options: const [15, 20, 30],
-                icon: Icons.self_improvement,
-                color: const Color(0xFF408EC6),
-              ).animate().fadeIn(
-                duration: const Duration(milliseconds: 300),
-                delay: const Duration(milliseconds: 300),
-              ),
-
-              const SizedBox(height: 24),
-
-              // Sessions Before Long Break
-              _buildDurationSelector(
-                context: context,
-                title: 'Sessions Before Long Break',
-                value: timerModel.sessionsBeforeLongBreak,
-                onChanged: (value) {
-                  timerModel.sessionsBeforeLongBreak = value;
-                },
-                options: const [2, 3, 4, 5, 6],
-                icon: Icons.repeat,
-                color: Colors.purpleAccent,
-              ).animate().fadeIn(
-                duration: const Duration(milliseconds: 300),
-                delay: const Duration(milliseconds: 400),
-              ),
-
-              const Spacer(),
-
-              // Tutorial Button
-              TextButton.icon(
-                onPressed: () {
-                  _navigateTo(AppRoutes.tutorial);
-                },
-                icon: const Icon(Icons.help_outline),
-                label: const Text('How to use'),
-                style: TextButton.styleFrom(foregroundColor: Colors.white70),
-              ).animate().fadeIn(
-                duration: const Duration(milliseconds: 300),
-                delay: const Duration(milliseconds: 500),
-              ),
-
-              const SizedBox(height: 16),
-
-              // Start Button
-              ElevatedButton(
-                    onPressed: () {
-                      _navigateTo(AppRoutes.timer);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                    ),
-                    child: const Text(
-                      'START',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
-                  .animate()
-                  .fadeIn(
-                    duration: const Duration(milliseconds: 300),
-                    delay: const Duration(milliseconds: 500),
-                  )
-                  .animate(
-                    onPlay: (controller) => controller.repeat(reverse: true),
-                  )
-                  .shimmer(
-                    duration: const Duration(seconds: 2),
-                    color: Colors.white24,
-                  ),
-            ],
-          ),
+            )
+                .animate()
+                .fadeIn(
+                  duration: const Duration(milliseconds: 300),
+                  delay: const Duration(milliseconds: 500),
+                )
+                .animate(
+                  onPlay: (controller) => controller.repeat(reverse: true),
+                )
+                .shimmer(
+                  duration: const Duration(seconds: 2),
+                  color: Colors.white24,
+                ),
+          ],
         ),
       ),
     );
@@ -191,18 +189,17 @@ class _TimeSelectionScreenState extends State<TimeSelectionScreen> {
           child: DropdownButtonHideUnderline(
             child: DropdownButton<int>(
               value: options.contains(value) ? value : options.first,
-              items:
-                  options.map((option) {
-                    return DropdownMenuItem<int>(
-                      value: option,
-                      child: Text(
-                        title.contains('Duration')
-                            ? '$option minutes'
-                            : option.toString(),
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                    );
-                  }).toList(),
+              items: options.map((option) {
+                return DropdownMenuItem<int>(
+                  value: option,
+                  child: Text(
+                    title.contains('Duration')
+                        ? '$option minutes'
+                        : option.toString(),
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                );
+              }).toList(),
               onChanged: (value) {
                 if (value != null) {
                   onChanged(value);

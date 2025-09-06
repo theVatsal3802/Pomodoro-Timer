@@ -15,14 +15,14 @@ void main() {
   ]);
 
   // Set system UI overlay style for dark theme
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light,
-      systemNavigationBarColor: Color(0xFF121212),
-      systemNavigationBarIconBrightness: Brightness.light,
-    ),
-  );
+  // SystemChrome.setSystemUIOverlayStyle(
+  //   const SystemUiOverlayStyle(
+  //     statusBarColor: Colors.transparent,
+  //     statusBarIconBrightness: Brightness.light,
+  //     systemNavigationBarColor: Color(0xFF121212),
+  //     systemNavigationBarIconBrightness: Brightness.light,
+  //   ),
+  // );
 
   runApp(const MyApp());
 }
