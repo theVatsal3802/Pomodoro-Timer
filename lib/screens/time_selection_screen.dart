@@ -46,7 +46,7 @@ class _TimeSelectionScreenState extends State<TimeSelectionScreen> {
               onChanged: (value) {
                 timerModel.focusDuration = value;
               },
-              options: const [25, 30, 45, 60],
+              options: const [25, 30, 45, 50, 55, 60],
               icon: Icons.work,
               color: Theme.of(context).colorScheme.primary,
             ).animate().fadeIn(
